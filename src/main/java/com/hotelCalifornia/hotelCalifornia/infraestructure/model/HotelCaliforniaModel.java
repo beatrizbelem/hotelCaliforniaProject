@@ -1,30 +1,39 @@
 package com.hotelCalifornia.hotelCalifornia.infraestructure.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.annotation.sql.DataSourceDefinition;
+import javax.persistence.*;
 import java.util.UUID;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Entity
+@Builder
+
+@Table(name = "hotel_california")
 public class HotelCaliforniaModel {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "local")
     private String local;
 
+    @Column(name = "capacidade")
     private int capacidade;
 
+    @Column(name = "cnpj")
     private String cnpj;
 
-    public HotelCaliforniaModel() {
-    }
-
-    public HotelCaliforniaModel(UUID id, String name, String local, int capacidade, String cnpj) {
-        this.id = id;
-        this.name = name;
-        this.local = local;
-        this.capacidade = capacidade;
-        this.cnpj = cnpj;
-    }
 
     public UUID getId() {
         return id;
