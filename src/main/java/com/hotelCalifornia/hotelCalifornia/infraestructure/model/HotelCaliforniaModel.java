@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.annotation.sql.DataSourceDefinition;
 import javax.persistence.*;
-import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
