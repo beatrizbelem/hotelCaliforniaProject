@@ -19,12 +19,12 @@ public class HotelCaliforniaController {
         this.hotelCaliforniaRepository = hotelCaliforniaRepository;
     }
 
-    @GetMapping
+    @GetMapping(value = "/findAll")
     public List findAll(){
         return hotelCaliforniaRepository.findAll();
     }
 
-    @PostMapping
+    @PostMapping(value = "/create")
     public HotelCaliforniaModel create(@RequestBody HotelCaliforniaModel hotelCaliforniaModel) {
         return hotelCaliforniaRepository.save(hotelCaliforniaModel);
     }
