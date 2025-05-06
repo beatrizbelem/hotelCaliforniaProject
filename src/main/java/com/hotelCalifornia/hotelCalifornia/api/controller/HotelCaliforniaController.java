@@ -1,14 +1,16 @@
 package com.hotelCalifornia.hotelCalifornia.api.controller;
 import com.hotelCalifornia.hotelCalifornia.infraestructure.model.HotelCaliforniaModel;
 import com.hotelCalifornia.hotelCalifornia.infraestructure.service.HotelCaliforniaService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping({"/api/hotel"})
-//@RequiredArgsConstructor
 
 public class HotelCaliforniaController {
 
@@ -29,14 +31,14 @@ public class HotelCaliforniaController {
     }
 
     @GetMapping(value = "find/{id}")
-    public ResponseEntity<HotelCaliforniaModel>findbyId(@PathVariable Long id) {
+    public ResponseEntity<HotelCaliforniaModel>findbyId(@PathVariable UUID id) {
         return hotelCaliforniaService.findById(id).map(hotel
                         -> ResponseEntity.ok().body(hotel))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping(value = "delete/{id}")
-    public ResponseEntity<?>deleteById(@PathVariable Long id, @RequestBody HotelCaliforniaModel hotelCaliforniaModel) {
+    public ResponseEntity<?>deleteById(@PathVariable UUID id, @RequestBody HotelCaliforniaModel hotelCaliforniaModel) {
         if (hotelCaliforniaService.existsById(id)){
             hotelCaliforniaService.deleteById(hotelCaliforniaModel);
             return ResponseEntity.ok().body("Deletado com Sucesso!");
@@ -44,16 +46,19 @@ public class HotelCaliforniaController {
             return ResponseEntity.notFound().build();
         }
 
-    @PutMapping(value = "update/{id}")
-    public ResponseEntity<HotelCaliforniaModel>updateById(@PathVariable Long id, @RequestBody HotelCaliforniaModel hotelCaliforniaModel) {
-        return hotelCaliforniaService.findById(id).map(hotel -> {
-                    hotel.setNome(hotelCaliforniaModel.getNome());
-                    hotel.setLocal(hotelCaliforniaModel.getLocal());
-                    hotel.setCapacidade(hotelCaliforniaModel.getCapacidade());
+    @PutMapping(value = "/update/{id}")
+    public ResponseEntity<Object> update(@PathVariable(value = "id") UUID id,
+                                         @RequestBody HotelCaliforniaModel hotelcaliforniaModel) {
 
-            return ResponseEntity.ok(hotelCaliforniaService.create(hotel));
+        Optional<HotelCaliforniaModel> hotelOptional = hotelCaliforniaService.findById(id);
 
-        }).orElse(ResponseEntity.notFound().build());
+        if (!hotelOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hotel nao encontrado");
+        }
+
+        hotelCaliforniaService.create(hotelcaliforniaModel);
+        return ResponseEntity.status(HttpStatus.OK).body(hotelcaliforniaModel);
+
     }
 }
 

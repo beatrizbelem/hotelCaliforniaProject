@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class HotelCaliforniaService {
@@ -24,7 +25,7 @@ public class HotelCaliforniaService {
         return hotelCaliforniaRepository.save(hotelCaliforniaModel);
     }
 
-    public Optional<HotelCaliforniaModel> findById(Long id){
+    public Optional<HotelCaliforniaModel> findById(UUID id){
         return hotelCaliforniaRepository.findById(id);
     }
 
@@ -32,7 +33,7 @@ public class HotelCaliforniaService {
          hotelCaliforniaRepository.delete(hotelCaliforniaModel);
     }
 
-    public boolean existsById(Long id){
+    public boolean existsById(UUID id){
         return hotelCaliforniaRepository.existsById(id);
     }
 

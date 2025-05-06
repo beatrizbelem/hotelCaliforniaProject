@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.annotation.sql.DataSourceDefinition;
 import javax.persistence.*;
+import java.util.UUID;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +21,7 @@ public class HotelCaliforniaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
 
     @Column(name = "nome")
     private String nome;
@@ -34,11 +36,11 @@ public class HotelCaliforniaModel {
     private String cnpj;
 
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
